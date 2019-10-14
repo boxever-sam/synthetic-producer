@@ -1,5 +1,7 @@
 topic: rb_producer
 fields:
+  id:
+    type: uuid
   set123:
     type: set
     numbers: 10
@@ -107,7 +109,7 @@ fields:
     type: constant
     value: IANA-L4
   src:
-    type: ip    
+    type: ip
     min: 192.168.1.1
     max: 192.168.1.128
   application_id:
@@ -172,7 +174,7 @@ fields:
       - 'http://www.google.es'
       - 'http://www.microsoft.es'
       - 'http://www.apple.com'
-  src_port: 
+  src_port:
     type: constant
     value: 80
   namespace_uuid:
