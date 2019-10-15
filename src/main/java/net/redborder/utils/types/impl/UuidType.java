@@ -1,5 +1,6 @@
 package net.redborder.utils.types.impl;
 
+import com.google.common.hash.Hashing;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,11 @@ public class UuidType implements Type {
             synchronized (UUIDS) {
                 uuid = UUIDS.get(index);
                 if (uuid == null) {
-                    uuid = UUID.randomUUID();
+                    // deterministic UUID generation
+                    uuid = new UUID(
+                            Hashing.murmur3_128(index).hashInt(index).asLong(),
+                            Hashing.murmur3_128(index).hashInt(index).asLong()
+                    );
                     UUIDS.put(index, uuid);
                 }
             }
