@@ -5,9 +5,11 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import net.redborder.utils.types.TypeManager;
 import org.junit.Test;
 
 public class UuidTypeTest {
@@ -27,5 +29,16 @@ public class UuidTypeTest {
             distinct.add((UUID) uuidType.get());
         }
         assertEquals("The number of distinct elements is unbounded", 100, distinct.size());
+    }
+
+    @Test
+    public void testUuidReuse() {
+        final UuidType uuidType1 = (UuidType) TypeManager.newType(
+                new HashMap<>(ImmutableMap.<String, Object>of("type", "uuid", "numberOfDistinct", 1)));
+
+        final UuidType uuidType2 = (UuidType) TypeManager.newType(
+                new HashMap<>(ImmutableMap.<String, Object>of("type", "uuid", "numberOfDistinct", 1)));
+
+        assertEquals(uuidType1.get(), uuidType2.get());
     }
 }
